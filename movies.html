@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Veegil Movie Recommendation</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8">
+	</head>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+
+		$('form').on('submit', function(event) {
+
+			$.ajax({
+				data : {
+					movie_title : $('#uiMovies').val()
+				},
+				type : 'POST',
+				url : '/predict'
+			})
+			.done(function(data) {
+
+				if (data.error) {
+					$('#errorAlert').text(data.error).show();
+					$('#successAlert').hide();
+				}
+				else {
+					$('#successAlert').text(data.recommendations).show();
+					$('#errorAlert').hide();
+				}
+
+			});
+
+			event.preventDefault();
+
+		});
+
+	});
+	</script>
+
+	<body style="color:#5D6D7E; background-color:white;" >
+		<h3 style="font-family: cursive; color:#3498DB;">MOVIE RECOMMENDATION SYSTEM</h3>
+		<form class="form">
+			<fieldset>
+				<legend>MOVIES</legend>
+
+				<br>
+
+				<select class="movie_title" name="" id="uiMovies">
+					<option value="" disabled="disabled" selected="selected">Select a Movie</option>
+						<option>Avatar</option>
+						<option>Pirates of the Caribbean: At World's End</option>
+						<option>Spectre</option>
+						<option>The Dark Knight Rises</option>
+						<option>John Carter</option>
+						<option>Spider-Man 3</option>
+						<option>Tangled</option>
+						<option>Avengers: Age of Ultron</option>
+						<option>Harry Potter and the Half-Blood Prince</option>
+						<option>Batman v Superman: Dawn of Justice</option>
+						<option>Superman Returns</option>
+						<option>Quantum of Solace</option>
+						<option>Pirates of the Caribbean: Dead Man's Chest</option>
+						<option>The Lone Ranger</option>
+						<option>Man of Steel</option>
+						<option>The Chronicles of Narnia: Prince Caspian</option>
+						<option>The Avengers</option>
+						<option>Pirates of the Caribbean: On Stranger Tides</option>
+						<option>Men in Black 3</option>
+						<option>The Hobbit: The Battle of the Five Armies</option>
+						<option>The Amazing Spider-Man</option>
+						<option>Robin Hood</option>
+						<option>The Hobbit: The Desolation of Smaug</option>
+						<option>The Golden Compass</option>
+						<option>King Kong</option>
+						<option>Titanic</option>
+						<option>Captain America: Civil War</option>
+						<option>Battleship</option>
+						<option>Jurassic World</option>
+						<option>Skyfall</option>						
+				</select>
+				<br>
+				<br>
+				<button style="color:#3498DB" type="submit" class="btn btn-default">Get Recommendations</button>
+				<br>
+				<br>
+				<div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+				<div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>	
+				
+
+			</fieldset>
+		</form>
+	</body>
+</html>
